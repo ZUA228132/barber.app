@@ -1,0 +1,26 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tg-bg: #0d0d0f;
+  --tg-secondary: #141419;
+  --tg-text: #f7f7f7;
+  --tg-muted: #a0a0a0;
+  --brand-gold: #f5d48f;
+}
+
+html, body {
+  background: var(--tg-bg);
+  color: var(--tg-text);
+}
+
+.gradient-border { position: relative; border-radius: 1rem; background: linear-gradient(135deg, rgba(245,212,143,0.25), rgba(136,224,208,0.25)); padding: 1px; }
+.gradient-border > .inner { background: var(--tg-secondary); border-radius: 1rem; }
+
+.btn { @apply px-4 py-2 rounded-xl font-medium transition active:scale-95; }
+.btn-primary { background: var(--brand-gold); color: #1a1a1a; box-shadow: 0 8px 20px rgba(245,212,143,0.35); }
+.btn-ghost { background: rgba(255,255,255,0.06); color: white; }
+
+.card { @apply rounded-2xl p-4 shadow-soft bg-[var(--tg-secondary)]; }
