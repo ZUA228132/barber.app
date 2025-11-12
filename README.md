@@ -1,28 +1,14 @@
 
-# Барбершоп · Telegram WebApp · Конфигуратор стиля (OpenAI + запись на Яндекс.Картах)
+# Barbershop · Telegram WebApp (Camera + OpenAI image edits)
 
-Интерактивный конфигуратор с OpenAI Images и кнопкой «Записаться», которая открывает страницу бронирования на Яндекс.Картах в новой вкладке.
+Features
+- Camera selfie in WebView → image-to-image styling with OpenAI (`gpt-image-1`)
+- Fallback: generate portrait from params if no photo provided
+- "Book" opens your Yandex.Maps booking page in a new browser tab
 
-## Быстрый старт
-```bash
-npm i
-npm run dev
-```
+Deploy
+1) Set `OPENAI_API_KEY` in Vercel Project → Settings → Environment Variables
+2) Deploy. Use BotFather → Menu Button → Add Web App with your Vercel URL.
 
-## Деплой на Vercel
-- Добавьте переменную окружения `OPENAI_API_KEY` в **Vercel → Project → Settings → Environment Variables**.
-- Задеплойте (Import Project или GitHub).
-
-## OpenAI
-API-роут: `/app/api/generate/route.ts` — использует модель `gpt-image-1`. Возвращает data URL PNG.
-Размер можно менять (512/1024/2048).
-
-## Кнопка «Записаться»
-- Находится в `components/Configurator.tsx`
-- Открывает ссылку Яндекс.Карт в **новой вкладке** через `window.open(url, "_blank")`
-- При блокировке попапов — автоматически делает fallback `window.location.href = url`
-
-## Telegram
-- Имя пользователя подтягивается из `window.Telegram.WebApp.initDataUnsafe.user.first_name`
-- Для работы внутри Telegram откройте WebApp из меню бота.
-- Для локальной отладки есть `/telegram-debug.html`.
+Security
+- Your OpenAI key never goes to client — only `app/api/generate/route.ts` uses it.
