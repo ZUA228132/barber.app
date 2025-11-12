@@ -9,10 +9,10 @@ export default function AvatarCanvas(){
   const {face,hair,beard}=useConfig()
   return (
     <div style={{display:'flex',justifyContent:'center'}}>
-      <svg viewBox="0 0 300 300" style={{width:'100%',maxWidth:300,filter:'drop-shadow(0 8px 20px rgba(0,0,0,.35))'}}>
+      <svg viewBox="0 0 300 300" style={{width:'100%',maxWidth:300,filter:'drop-shadow(0 8px 26px rgba(0,0,0,.45))'}}>
         <defs>
-          <linearGradient id="skin" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#f7d7c2"/><stop offset="100%" stopColor="#e9bfa6"/>
+          <linearGradient id="skin" x1="0%" y1="0%" x2="100%">
+            <stop offset="0%" stopColor="#f6d7c3"/><stop offset="100%" stopColor="#e7bea5"/>
           </linearGradient>
           <linearGradient id="hair" x1="0%" y1="0%" x2="100%">
             <stop offset="0%" stopColor="#2b2b2b"/><stop offset="100%" stopColor="#000"/>
@@ -22,9 +22,9 @@ export default function AvatarCanvas(){
         <path d={Face[face]} fill="url(#skin)"/>
         <path d={Hair[hair]} fill="url(#hair)"/>
         {Beard[beard] && <path d={Beard[beard]} fill="url(#hair)" opacity="0.95"/>}
-        <circle cx="120" cy="150" r="6" fill="#1a1a1a"/><circle cx="180" cy="150" r="6" fill="#1a1a1a"/>
-        <path d="M100,135c10,-8 25,-8 35,0" stroke="#1a1a1a" strokeWidth="4" fill="none" strokeLinecap="round"/>
-        <path d="M165,135c10,-8 25,-8 35,0" stroke="#1a1a1a" strokeWidth="4" fill="none" strokeLinecap="round"/>
+        <circle cx="120" cy="150" r="6" fill="#0e0e0f"/><circle cx="180" cy="150" r="6" fill="#0e0e0f"/>
+        <path d="M100,135c10,-8 25,-8 35,0" stroke="#0e0e0f" strokeWidth="4" fill="none" strokeLinecap="round"/>
+        <path d="M165,135c10,-8 25,-8 35,0" stroke="#0e0e0f" strokeWidth="4" fill="none" strokeLinecap="round"/>
       </svg>
     </div>
   )

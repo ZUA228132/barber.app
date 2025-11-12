@@ -1,3 +1,4 @@
+
 import OpenAI, { toFile } from "openai";
 import { NextResponse } from "next/server";
 
@@ -7,7 +8,6 @@ export async function POST(req: Request) {
   try {
     const contentType = req.headers.get("content-type") || "";
 
-    // multipart/form-data → image-to-image edit
     if (contentType.includes("multipart/form-data")) {
       const form = await req.formData();
       const face = String(form.get("face") || "oval");
@@ -22,12 +22,11 @@ Keep natural skin, preserve identity, realistic lighting, premium studio look.`;
 
       const openaiFile = await toFile(Buffer.from(await photo.arrayBuffer()), "photo.png");
 
-      // ✅ ВАЖНО: image принимает одиночный Uploadable, не массив
       const res = await client.images.edit({
         model: "gpt-image-1",
         image: openaiFile,
         prompt,
-        size: "1024x1024",
+        size: "1024x1024"
       });
 
       const b64 = res.data?.[0]?.b64_json;
@@ -39,9 +38,7 @@ Keep natural skin, preserve identity, realistic lighting, premium studio look.`;
       return NextResponse.json({ url: `data:image/png;base64,${b64}` });
     }
 
-    // application/json → обычная генерация
     const { face, hair, beard } = await req.json();
-
     const prompt = `Barbershop hair style preview, photorealistic portrait, male.
 Face shape: ${face}. Hair length: ${hair}. Beard: ${beard}.
 Studio lighting, premium editorial look, sharp focus, neutral background.`;
@@ -49,7 +46,7 @@ Studio lighting, premium editorial look, sharp focus, neutral background.`;
     const img = await client.images.generate({
       model: "gpt-image-1",
       prompt,
-      size: "1024x1024",
+      size: "1024x1024"
     });
 
     const b64 = img.data?.[0]?.b64_json;
