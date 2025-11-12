@@ -7,14 +7,13 @@ export async function POST(req: Request) {
   try {
     const contentType = req.headers.get("content-type") || "";
 
-    // Ветка с фото (multipart/form-data) → image-to-image edit
+    // multipart/form-data → image-to-image edit
     if (contentType.includes("multipart/form-data")) {
       const form = await req.formData();
       const face = String(form.get("face") || "oval");
       const hair = String(form.get("hair") || "short");
       const beard = String(form.get("beard") || "none");
       const photo = form.get("photo") as File | null;
-
       if (!photo) throw new Error("No photo provided");
 
       const prompt = `Style transfer / edit: keep the original person. Apply barbershop makeover.
@@ -23,10 +22,10 @@ Keep natural skin, preserve identity, realistic lighting, premium studio look.`;
 
       const openaiFile = await toFile(Buffer.from(await photo.arrayBuffer()), "photo.png");
 
-      // ✅ правка здесь: edits -> edit
+      // ✅ ВАЖНО: image принимает одиночный Uploadable, не массив
       const res = await client.images.edit({
         model: "gpt-image-1",
-        image: [openaiFile],
+        image: openaiFile,
         prompt,
         size: "1024x1024",
       });
@@ -40,7 +39,7 @@ Keep natural skin, preserve identity, realistic lighting, premium studio look.`;
       return NextResponse.json({ url: `data:image/png;base64,${b64}` });
     }
 
-    // Ветка без фото (application/json) → обычная генерация
+    // application/json → обычная генерация
     const { face, hair, beard } = await req.json();
 
     const prompt = `Barbershop hair style preview, photorealistic portrait, male.
